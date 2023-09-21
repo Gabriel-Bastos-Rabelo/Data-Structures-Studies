@@ -2,7 +2,9 @@
 #include <stdio.h>
 
 int main()
+
 {
+
     // Pegando do usuario numero de linhas e colunas da matriz A
     int matALinhas, matAColunas;
     printf("Digite o número de linhas e colunas da matriz A: \n");
@@ -139,8 +141,25 @@ int main()
     }
 
     // Destruindo a matriz A
-    destroy(mata);
+
+    int destruicaoA = destroy(mata);
+    if (destruicaoA == TRUE)
+    {
+        printf("Matriz A destruída\n");
+    }
+    else
+    {
+        printf("Erro ao destruir a matriz A\n");
+    }
 
     // Destruindo a matriz B
-    destroy(matb);
+    int destruicaoB = destroy(matb);
+    if (destruicaoB == TRUE)
+    {
+        printf("Matriz B destruída\n");
+    }
+    else
+    {
+        printf("Erro ao destruir a matriz B\n");
+    }
 }

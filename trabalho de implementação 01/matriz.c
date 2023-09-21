@@ -52,26 +52,34 @@ int matGetElemIJ(Matriz *mat, int i, int j)
 
 int *transposta(Matriz *mat)
 {   
-    if(mat -> row != mat -> col){
-        return NULL;
-    }
-    int *mc = (int *)malloc(sizeof(int) * (mat->row * mat->col));
-    if (mc == NULL)
-    {
-        return NULL;
-    }
-    for (int i = 0; i < mat->row; i++)
-    {
-        for (int j = 0; j < mat->col; j++)
+    if(mat -> row == mat -> col){
+        
+        int *mc = (int *)malloc(sizeof(int) * (mat->row * mat->col));
+        if(mc != NULL){
+
+        for (int i = 0; i < mat->row; i++)
         {
+            for (int j = 0; j < mat->col; j++)
+            {
 
-            int k = (j * mat->row) + i;
-            int l = (i * mat->col) + j;
-            mc[k] = mat->matriz[l];
+                int k = (j * mat->row) + i;
+                int l = (i * mat->col) + j;
+                mc[k] = mat->matriz[l];
+            }
         }
-    }
 
-    return mc;
+         return mc;
+        }
+
+         
+
+
+        }
+        
+       
+    
+    return NULL;
+   
 }
 
 int *multiplication(Matriz *mata, Matriz *matb)

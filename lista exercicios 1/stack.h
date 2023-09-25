@@ -10,3 +10,8 @@ int iSegundoElementoInalterada(Stack *s, void *i);
 int iEnesimoElemento(Stack *s, int n, void *i);
 int iEnesimoInalterada(Stack *s, int n, void *i);
 int iUltimoElementoVazia(Stack *s, void *i);
+int iUltimoElementoInalterada(Stack *s, void *i);
+int iterceiroElementoFinal(Stack *s, void *i);
+int xCy(void *frase);
+int aDbD(void *frase);
+int sequenciaValida(void *seq);

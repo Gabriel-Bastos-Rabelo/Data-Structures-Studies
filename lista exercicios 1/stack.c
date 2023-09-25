@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "stack.h"
 
 #define TRUE 1
@@ -169,6 +170,8 @@ int iEnesimoElemento(Stack *s, int n, void *i)
     return FALSE;
 }
 
+// questao 1 d
+
 int iEnesimoInalterada(Stack *s, int n, void *i)
 {
     if (s != NULL)
@@ -200,6 +203,227 @@ int iEnesimoInalterada(Stack *s, int n, void *i)
     return FALSE;
 }
 
+// questao 1 e
 int iUltimoElementoVazia(Stack *s, void *i)
 {
+    if (s != NULL)
+    {
+
+        for (int i = s->top; i > -1; i--)
+        {
+            stkPop(s);
+        }
+
+        stkPush(s, i);
+
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+// questao 1 f
+
+int iUltimoElementoInalterada(Stack *s, void *i)
+{
+
+    if (s != NULL)
+    {
+        Stack *q = stkCreate(s->top + 2);
+        void *aux;
+        if (q != NULL)
+        {
+            for (int i = s->top; i > -1; i--)
+            {
+                aux = stkPop(s);
+                stkPush(q, aux);
+            }
+
+            stkPush(s, i);
+
+            for (int i = q->top; i > -1; i--)
+            {
+                aux = stkPop(q);
+                stkPush(s, aux);
+            }
+
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+// questao 1 g
+int iterceiroElementoFinal(Stack *s, void *i)
+{
+    if (s != NULL)
+    {
+        if (s->top >= 1)
+        {
+            Stack *q = stkCreate(s->top + 2);
+            void *aux;
+            for (int i = s->top; i > 1; i--)
+            {
+                aux = stkPop(s);
+                stkPush(q, aux);
+            }
+
+            stkPush(s, i);
+
+            for (int i = q->top; i > -1; i--)
+            {
+                aux = stkPop(q);
+                stkPush(s, aux);
+            }
+
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+// questao 2
+
+int xCy(void *frase)
+{
+    int tamanho = strlen((char *)frase);
+    Stack *q = stkCreate(tamanho);
+    if (q != NULL)
+    {
+
+        int i = 0;
+        void *aux;
+        while (((char *)frase)[i] != 'C')
+        {
+
+            stkPush(q, &((char *)frase)[i]);
+            i++;
+        }
+        i++;
+        while (i < tamanho)
+        {
+            if (stkIsEmpty(q) == TRUE)
+            {
+                return FALSE;
+            }
+            aux = stkPop(q);
+            if (*((char *)aux) != ((char *)frase)[i])
+            {
+                return FALSE;
+            }
+            i++;
+        }
+
+        if (stkIsEmpty(q) == TRUE)
+        {
+
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+// questao 3
+int aDbD(void *frase)
+{
+    int tamanho = strlen((char *)frase);
+    Stack *pilha1 = stkCreate(tamanho);
+    Stack *pilha2 = stkCreate(tamanho);
+    if (pilha1 != NULL)
+    {
+        void *aux;
+        int i = 0;
+        while (((char *)frase)[i] != 'D')
+        {
+            stkPush(pilha1, &((char *)frase)[i]);
+            i++;
+        }
+        i++;
+        int desempilharParaPilha2 = TRUE;
+        for (; i < tamanho; i++)
+        {
+            if (((char *)frase)[i] == 'D')
+            {
+                if (desempilharParaPilha2)
+                {
+                    if (stkIsEmpty(pilha1) == FALSE)
+                    {
+
+                        return FALSE;
+                    }
+                    desempilharParaPilha2 = FALSE;
+                }
+                else
+                {
+                    if (stkIsEmpty(pilha2) == FALSE)
+                    {
+
+                        return FALSE;
+                    }
+                    desempilharParaPilha2 = TRUE;
+                }
+            }
+            else if (desempilharParaPilha2)
+            {
+                if (stkIsEmpty(pilha1) == TRUE)
+                {
+
+                    return FALSE;
+                }
+                aux = stkPop(pilha1);
+                if (*((char *)aux) != ((char *)frase)[i])
+                {
+                    return FALSE;
+                }
+                stkPush(pilha2, aux);
+            }
+            else if (desempilharParaPilha2 == FALSE)
+            {
+                if (stkIsEmpty(pilha2) == TRUE)
+                {
+
+                    return FALSE;
+                }
+                aux = stkPop(pilha2);
+                if (*((char *)aux) != ((char *)frase)[i])
+                {
+                    return FALSE;
+                }
+                stkPush(pilha1, aux);
+            }
+        }
+
+        return TRUE;
+    }
+}
+
+// questao 7
+int sequenciaValida(void *seq)
+{
+    int tamanho = strlen((char *)seq);
+
+    int empilhar = 0;
+    int desempilhar = 0;
+    for (int i = 0; i < tamanho; i++)
+    {
+        if (((char *)seq)[i] == 'E')
+        {
+            empilhar++;
+        }
+        else
+        {
+            desempilhar++;
+            if (desempilhar > empilhar)
+            {
+                return FALSE;
+            }
+        }
+
+        
+    }
+
+    return TRUE;
 }

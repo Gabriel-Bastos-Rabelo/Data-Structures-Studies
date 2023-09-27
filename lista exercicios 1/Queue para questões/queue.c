@@ -69,7 +69,7 @@ int qEnqueue(Queue *q, void *data)
 }
 
 void *qDequeue(Queue *q)
-{
+{   
     if (q != NULL)
     {
 
@@ -163,4 +163,11 @@ void *removeElemento(Queue *q, void *x)
     }
 
     return NULL;
+}
+
+
+int removeElementosOrdemImpar(Queue *q){
+    if(q != NULL){
+
+    }
 }

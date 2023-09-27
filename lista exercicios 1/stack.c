@@ -421,9 +421,135 @@ int sequenciaValida(void *seq)
                 return FALSE;
             }
         }
-
-        
     }
 
     return TRUE;
+}
+
+// questao 8 d
+int menorQueChave(Stack *s, void *value)
+{
+    if (s != NULL)
+    {
+        if (stkIsEmpty(s) == FALSE)
+        {
+
+            while (*(int *)s->item[s->top] > *(int *)value)
+            {
+                s->top--;
+                printf("%d ", *(int *)s->item[s->top]);
+            }
+
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+// questao 10
+int puneNParatraz(Stack *s, int n)
+{
+    if (s != NULL)
+    {
+        if (n <= s->top)
+        {
+            void *aux;
+            aux = stkTop(s);
+            int next;
+            for (int i = s->top; i > s->top - n; i--)
+            {
+                s->item[i] = s->item[i - 1];
+            }
+
+            s->item[s->top - n] = aux;
+
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+// questao 1 prova 2023.1
+
+char *inverteString(char *s, int n)
+{
+    if (s != NULL)
+    {
+
+        char *stringAuxiliar = malloc(sizeof(char) * n);
+        Stack *pilhaAuxiliar = stkCreate(n);
+    
+        int posicaoString = 0;
+
+        for(int i = 0; i < n; i++)
+        {
+            if (((char *)s)[i] == ' ' || ((char *)s)[i] == '.')
+            {
+                while (stkIsEmpty(pilhaAuxiliar) == FALSE)
+                {
+                    stringAuxiliar[posicaoString] = *(char *)stkPop(pilhaAuxiliar);
+
+                    posicaoString++;
+                }
+                if (((char *)s)[i] == ' ')
+                {
+                    stringAuxiliar[posicaoString] = ' ';
+                }
+                else
+                {
+                    stringAuxiliar[posicaoString] = '.';
+                }
+                posicaoString++;
+            }
+            else
+            {
+
+                stkPush(pilhaAuxiliar, &((char *)s)[i]);
+            }
+
+    
+        }
+
+        stkDestroy(pilhaAuxiliar);
+        return stringAuxiliar;
+    }
+
+    return NULL;
+}
+
+
+int stkPromove(Stack * s, int n){
+    if(s != NULL){
+        if(n <= s->top+1){
+
+            Stack *pilhaAuxiliar = stkCreate(s->top+1);
+            void *aux;
+            void *elm;
+            for(int i = s->top; i > n; i--){
+                aux = stkPop(s);
+                stkPush(pilhaAuxiliar, aux);
+            }
+
+            elm = stkPop(s);
+
+            while(stkIsEmpty(pilhaAuxiliar) == FALSE){
+
+                
+                aux = stkPop(pilhaAuxiliar);
+                stkPush(s, aux);
+            }
+
+            stkPush(s, elm);
+
+            return TRUE;
+
+
+
+
+        }
+    }
+
+    return FALSE;
 }

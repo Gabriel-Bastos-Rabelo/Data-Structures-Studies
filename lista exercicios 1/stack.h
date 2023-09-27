@@ -15,3 +15,8 @@ int iterceiroElementoFinal(Stack *s, void *i);
 int xCy(void *frase);
 int aDbD(void *frase);
 int sequenciaValida(void *seq);
+int menorQueChave(Stack *s, void *value);
+int puneNParatraz(Stack *s, int n);
+char *inverteString(char *s, int n);
+int stkPromove(Stack * s, int n);
+

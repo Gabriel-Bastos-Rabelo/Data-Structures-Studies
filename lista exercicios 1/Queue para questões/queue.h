@@ -7,3 +7,5 @@ void *qFirst(Queue *q);
 void *qDequeue(Queue *q);
 int qDestroy(Queue *q);
 void *removeElemento(Queue *q, void *x);
+
+int removeElementosOrdemImpar(Queue *q);

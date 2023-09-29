@@ -434,7 +434,7 @@ int menorQueChave(Stack *s, void *value)
         if (stkIsEmpty(s) == FALSE)
         {
 
-            while (*(int *)s->item[s->top] > *(int *)value)
+            while (*(int *)s->item[s->top] > *(int *)value && stkIsEmpty(s) == FALSE)
             {
                 s->top--;
                 printf("%d ", *(int *)s->item[s->top]);

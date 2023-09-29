@@ -135,12 +135,12 @@ int removeElementosOrdemImpar(CQueue *q)
 {
     if (q != NULL)
     {
-        int pos = 1;
+        int pos = 0;
         int next;
-        while (pos < (int)(q->nElms / 2))
+        while (pos <= (int)(q->nElms / 2))
         {
 
-            for (int i = pos - 1; i < q->nElms - 1; i++)
+            for (int i = pos; i < q->nElms; i++)
             {
                 next = incCirc(i, q->maxItens);
                 q->item[i] = q->item[next];

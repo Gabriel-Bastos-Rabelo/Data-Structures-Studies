@@ -237,6 +237,7 @@ int main(void)
                     if (gcofDestroy(cofo))
                     {
                         printf("O cofo foi destruído com sucesso.\n");
+                        cofo = NULL;
                     }
                     else
                     {

@@ -5,10 +5,20 @@
 int EYOX(char *s, int n);
 int main()
 {
-    char palavra[] = "ABABOBABA";
+    /*char palavra[] = "ABABOBABA";
     int n = 9;
     int resultado = EYOX(palavra, n);
     printf("%d", resultado);
+
+    */
+
+    char palavra[] = "AAAA";
+
+    printf("resultado");
+
+    int resultado = ehPalindromo(palavra, 4);
+
+    printf(" %d", resultado);
 }
 
 int EYOX(char *s, int n)
@@ -21,7 +31,7 @@ int EYOX(char *s, int n)
         while (s[i] != 'O')
         {
             stkPush(stack, s[i]);
-            
+
             i++;
         }
         i++;

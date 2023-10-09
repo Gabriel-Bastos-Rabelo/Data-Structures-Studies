@@ -64,37 +64,35 @@ int stkPush(Stack *s, char elm)
     return FALSE;
 }
 
-char stkPop(Stack *s)  // Correção aqui
+char stkPop(Stack *s) // Correção aqui
 {
-    char aux;  // Correção aqui
+    char aux; // Correção aqui
     if (s != NULL)
     {
         if (s->top >= 0)
         {
-            aux = s->item[s->top];  // Correção aqui
+            aux = s->item[s->top]; // Correção aqui
             s->top--;
-            return aux;  // Correção aqui
+            return aux; // Correção aqui
         }
     }
 
-    return '\0';  // Correção aqui
+    return '\0'; // Correção aqui
 }
 
-
-char stkTop(Stack *s)  // Correção aqui
+char stkTop(Stack *s) // Correção aqui
 {
-    char aux;  // Correção aqui
+    char aux; // Correção aqui
     if (s != NULL)
     {
         if (s->top >= 0)
         {
-            aux = s->item[s->top];  // Correção aqui
-            return aux;  // Correção aqui
+            aux = s->item[s->top]; // Correção aqui
+            return aux;            // Correção aqui
         }
     }
-    return '\0';  // Correção aqui
+    return '\0'; // Correção aqui
 }
-
 
 int stkIsEmpty(Stack *s)
 {
@@ -105,5 +103,42 @@ int stkIsEmpty(Stack *s)
             return TRUE;
         }
     }
+    return FALSE;
+}
+
+// lista de exercicios 4
+
+int ehPalindromo(char *s, int n)
+{
+
+    if (s != NULL)
+    {
+        Stack *stk = stkCreate(n);
+        if (stk != NULL)
+        {
+
+            char aux;
+            for (int i = 0; i < n; i++)
+            {
+                stkPush(stk, s[i]);
+                
+            }
+
+            for (int j = 0; j < n; j++)
+            {
+                aux = stkPop(stk);
+                
+                if (aux != s[j])
+                {
+
+                   
+                    return FALSE;
+                }
+            }
+
+            return TRUE;
+        }
+    }
+
     return FALSE;
 }

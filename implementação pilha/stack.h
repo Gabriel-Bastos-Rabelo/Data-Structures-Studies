@@ -5,3 +5,4 @@ char stkPop(Stack *s);
 char stkTop(Stack *s);
 int stkIsEmpty(Stack *s);
 int stkDestroy(Stack *s);
+int ehPalindromo(char *s, int n);

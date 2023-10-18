@@ -130,4 +130,72 @@ int sllNumElms( LQueue *l){
     return 0;
 }
 
+int sllInsertAfterSpecified( LQueue *l, void *key, void *data, int (*cmp)(void *, void *)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            SLNode * current;
+            SLNode * newnode;
+
+            current = l -> first;
+            while(cmp(current->data, key) == FALSE){
+                current = current -> next;
+
+            }
+
+            newnode = (SLNode *)malloc(sizeof(SLNode));
+            if(newnode != NULL){
+
+                newnode->data = data;
+                newnode->next = current->next;
+                current->next = newnode;
+                return TRUE;
+
+
+            }
+           
+        }
+    }
+
+    return FALSE;
+}
+
+
+int sllBeforeSpecified( LQueue *l, void *key, void *data, int (*cmp)(void *, void *)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            SLNode *last;
+            SLNode *current;
+            SLNode *newnode;
+            current = l -> first;
+            last = NULL;
+        
+
+            while(cmp(current->data, key) == FALSE){
+                last = current;
+                current = current->next;
+                
+            }
+
+            newnode = (SLNode *)malloc(sizeof(SLNode));
+            if(newnode != NULL){
+                newnode->data = data;
+                newnode->next = current;
+                if(last != NULL){
+                    last->next = newnode;
+                }
+                else{
+                    l->first = newnode;
+                }
+                
+            
+                return TRUE;
+            }
+
+
+        }
+    }
+
+    return FALSE;
+}
+
 

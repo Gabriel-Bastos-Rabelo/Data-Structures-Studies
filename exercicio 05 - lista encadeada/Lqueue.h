@@ -11,3 +11,5 @@ int InsertAsLast(LQueue *lq, void *data);
 void *RemoveFirst(LQueue *lq);
 void *GetFirst(LQueue *lq);
 int sllNumElms( LQueue *l);
+int sllBeforeSpecified( LQueue *l, void *key, void *data, int (*cmp)(void *, void *));
+int sllInsertAfterSpecified( LQueue *l, void *key, void *data, int (*cmp)(void *, void *));

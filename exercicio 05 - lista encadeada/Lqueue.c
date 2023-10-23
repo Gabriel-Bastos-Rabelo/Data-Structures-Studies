@@ -199,3 +199,197 @@ int sllBeforeSpecified( LQueue *l, void *key, void *data, int (*cmp)(void *, voi
 }
 
 
+int sllInsertAfterPEsimo(LQueue *l, int p, void *data){
+    if(l != NULL){
+        if(l->first != NULL){
+
+            int i = 0;
+
+            SLNode *aux = l->first;
+
+            while(i < p && aux->next != NULL){
+
+                aux = aux -> next;
+                i++;
+            }
+
+            SLNode *newnode = (SLNode *)malloc(sizeof(SLNode));
+
+            if(newnode != NULL){
+                newnode->data = data;
+                newnode->next = aux->next;
+                aux->next = newnode;
+                return TRUE;
+            }
+        }
+
+
+
+    }
+       
+
+    return FALSE;
+}
+
+
+int sllInsetBeforePEsimo(LQueue *l, int p, void *data){
+    if(l != NULL){
+        if(l->first != NULL){
+            SLNode *current;
+            SLNode *last;
+
+            last = NULL;
+            current = l->first;
+
+            int i = 0;
+            while(i < p && current -> next != NULL){
+                last = current;
+                current = current->next;
+                i++;
+            }
+
+            SLNode *newnode = (SLNode *)malloc(sizeof(SLNode));
+
+            if(newnode != NULL){
+
+                newnode->data = data;
+                newnode->next = current;
+
+                if(last != NULL){
+                    
+                    last->next = newnode;
+                }
+                else{
+        
+                    l->first = newnode;
+                }
+
+
+                return TRUE;
+                
+        
+            }
+
+
+        }
+    }
+
+    return FALSE;
+}
+
+void* sllRemovePEsimo(LQueue *l, int p){
+    if(l != NULL){
+        if(l -> first != NULL){
+            SLNode *last;
+            SLNode *current;
+
+            last = NULL;
+            current = l->first;
+
+            int i = 0;
+
+            while(i < p && current->next != NULL){
+                last = current;
+                current = current->next;
+                i++;
+            }
+
+            void *data = current->data;
+
+            if(last != NULL){
+                last->next = current->next;
+                current->next = NULL;
+            }
+            else{
+                l->first = current->next;
+            }
+
+            free(current);
+            return data;
+
+            
+        }
+    }
+
+    return NULL;
+}
+
+void *sllQuerySpec(LQueue *l, void *key, int (*cmp)(void *, void *)){
+    if(l != NULL){
+        if(l -> first != NULL){
+
+            SLNode *current;
+            current = l-> first;
+
+            int achou = FALSE;
+
+            while(current -> next != NULL){
+
+                if(cmp(current->data, key)){
+                    achou = TRUE;
+                    break;
+                }
+
+                current = current->next;
+
+            }
+
+            if(achou){
+
+                void *data = current->data;
+                return data;
+
+            }
+
+
+
+        }
+    }
+
+    return NULL;
+}
+
+
+void *sllRemoveSpec(LQueue *l, void *key, int (*cmp)(void *, void*)){
+    if(l != NULL){
+        if(l->first != NULL){
+            SLNode *current;
+            SLNode *last;
+            last = NULL;
+            current = l->first;
+
+
+            int achou = FALSE;
+
+            while(current->next != NULL){
+                last = current;
+                if(cmp(current->data, key)){
+                    achou = TRUE;
+                    break;
+
+                }
+
+                current = current->next;
+            }
+
+            if(achou){
+
+                void *data = current->data;
+                if(last != NULL){
+                    last->next = current->next;
+                }
+
+                else{
+                    l->first = current->next;
+                }
+
+                free(current);
+                return data;
+
+            }
+        }
+    }
+
+    return NULL;
+}
+

@@ -1,11 +1,15 @@
 #include "dll.h"
+#include <stdio.h>
+#include <stdlib.h>
+#define TRUE 1
+#define FALSE 0
 
 DLList* dllCreate(){
-    l = (DLList *)malloc(sizeof(DLList));
+    DLList *l = (DLList *)malloc(sizeof(DLList));
 
     if(l != NULL){
         l->first = NULL;
-        l->cur = NULL;
+        l->cur = -1;
         return l;
     }
 
@@ -25,7 +29,7 @@ int dllDestroy(DLList *l){
 }
 
 
-int insertAfterSpec(DLList *l, void *key, void *data, int (*cmp)(void *, void*)){
+int dllinsertAfterSpec(DLList *l, void *key, void *data, int (*cmp)(void *, void*)){
     if(l != NULL){
         if(l -> first != NULL && key != NULL && data != NULL){
 
@@ -33,7 +37,7 @@ int insertAfterSpec(DLList *l, void *key, void *data, int (*cmp)(void *, void*))
 
             spec = l->first;
 
-            int stat = cmp(key, spec->data)
+            int stat = cmp(key, spec->data);
 
             while(stat != TRUE && spec->next != NULL){
                 spec = spec -> next;
@@ -67,38 +71,180 @@ int insertAfterSpec(DLList *l, void *key, void *data, int (*cmp)(void *, void*))
 
 
 int dllInsertAsLast(DLList *l, void *data){
+   
     if(l != NULL){
-       if(l -> first  == NULL){
-            DLNode *newnode = (DLNode *)malloc(sizeof(DLNode));
-            newnode->data = data;
-            newnode->prev = NULL;
-            newnode -> next = NULL;
-            l->first = newnode;
+        DLNode *last;
+        if(l -> first  == NULL){
+            last = NULL;
+        }
 
-            return TRUE;
-       }
-       else{
-            DLNode *current;
-            current = l->first;
+        else{
+            last = l->first;
 
-            while(current -> next != NULL){
-                current = current -> next;
+            while(last -> next != NULL){
+                last = last->next;
             }
+        }
 
-            DLNode *newnode = (DLNode *)malloc(sizeof(DLNode));
+        DLNode *newnode = (DLNode *)malloc(sizeof(DLNode));
+
+        if(newnode != NULL){
             newnode -> data = data;
             newnode -> next = NULL;
-            newnode -> prev = current;
+            
 
-            current->next = newnode;
+            if(last == NULL){
+                l->first = newnode;
+                newnode->prev = NULL;
+            }
+            else{
+                last -> next = newnode;
+                newnode -> prev = last;
+            }
 
+            
 
             return TRUE;
+        }
 
-
-       }
+       
 
     }
 
+    
     return FALSE;
+         
+}
+
+
+void* removeSpec(DLList *l, void *key, int(*cmp)(void *, void*)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            DLNode *last;
+            last = l->first;
+            int stat = cmp(key, last->data);
+            while(stat != TRUE && last->next != NULL){
+                last = last->next;
+                stat = cmp(key, last->data);
+            }
+
+            if(stat == TRUE){
+                DLNode *data = last->data;
+                DLNode *next = last->next;
+                DLNode *prev = last->prev;
+
+                if(next != NULL){
+                    next->prev = prev;
+                }
+
+                if(prev != NULL){
+                    prev->next = next;
+                }
+                else{
+                    l->first = next;
+                }
+
+
+                free(last);
+                return data;
+
+
+            }
+        }
+    }
+
+    return NULL;
+}
+
+void* dllQuery(DLList *l, void *key, int(*cmp)(void *, void*)){
+    if(l != NULL){
+        if(l->first != NULL){
+            DLNode *current;
+            current = l->first;
+            int stat = cmp(key, current->data);
+
+            while(stat != TRUE && current -> next != NULL){
+                current = current -> next;
+                stat = cmp(key, current->data);
+            }
+
+            if(stat == TRUE){
+                void *data = current->data;
+
+                return data;
+            }
+        }
+    }
+
+    return NULL;
+}
+
+
+void* removeLast(DLList *l){
+    if(l != NULL){
+        if(l -> first != NULL){
+            DLNode *spec;
+            spec = l->first;
+
+            while(spec -> next != NULL){
+                spec = spec -> next;
+            }
+
+            void *data = spec->data;
+            if(spec->prev == NULL){
+                l->first = NULL;
+            }
+            else{
+                spec->prev->next = NULL;
+            }
+
+            return data;
+        }
+    }
+
+
+    return NULL;
+
+}
+
+
+int esvaziarLista(DLList *l){
+    if(l != NULL){
+        if(l -> first != NULL){
+
+            while(l -> first != NULL){
+                removeLast(l);
+            }
+
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+
+
+
+void* dllGetFirst(DLList *l){
+    if(l != NULL){
+        if(l -> first != NULL){
+            return l->first;
+        }
+    }
+
+
+    return NULL;
+}
+
+
+void* dllGetNext(DLNode *node){
+
+    if(node != NULL){
+        return node->next;
+    }
+
+    return NULL;
+
+
 }

@@ -36,7 +36,7 @@ SLList *sllcreate(){
 
 
 CDLList *cdllcreate(){
-    SLList *l = (CDLList *)malloc(sizeof(CDLList));
+    CDLList *l = (CDLList *)malloc(sizeof(CDLList));
 
     if(l != NULL){
         l->first = NULL;
@@ -48,7 +48,7 @@ CDLList *cdllcreate(){
 }
 
 CSLList *csllcreate(){
-    SLList *l = (CSLList *)malloc(sizeof(CSLList));
+    CSLList *l = (CSLList *)malloc(sizeof(CSLList));
 
     if(l != NULL){
         l->first = NULL;
@@ -321,15 +321,25 @@ int sllInsertKPosition(SLList *l, void *data, int k){
             newnode -> data = data;
 
             SLNode *current = l->first;
+            SLNode *last = NULL;
+
             int i = 0;
             while(current != NULL && i < k){
+                last = current;
                 current = current -> next;
-                i += 1;
+                i += 0;
             }
 
-            if(current != NULL){
-                newnode -> next = current -> next;
-                current -> next = newnode;
+            if(i == k){
+                newnode -> next = current;
+
+                if(last == NULL){
+                    l -> first = newnode;
+                }
+                else{
+                    last -> next = newnode;
+                }
+
                 return TRUE;
             }
         }
@@ -338,3 +348,119 @@ int sllInsertKPosition(SLList *l, void *data, int k){
     return FALSE;
 }
 
+//para lista duplamente encadeada
+
+int dllInsertKPosition(DLList *l, void *data, int k){
+    if(l != NULL){
+        DLNode *newnode = (DLNode *)malloc(sizeof(DLNode));
+        if(newnode != NULL){
+            newnode -> data = data;
+
+            DLNode *current = l->first;
+
+            int i = 0;
+            while(current != NULL && i < k){
+                current = current -> next;
+                i += 1;
+
+            }
+
+            if(i == k){
+                newnode -> next = current;
+                if(current == NULL){
+                    l->first = newnode;
+                    newnode -> prev = NULL;
+                }
+                else{
+                    current->prev->next = newnode;
+                    newnode -> prev = current->prev;
+                    current -> prev = newnode;
+                }
+
+                return TRUE;
+            }
+
+
+        }
+    }
+
+    return FALSE;
+}
+
+//para lista circular simplesmente encadeada
+
+int csllInsertKPosition(CSLList *l, void *data, int k){
+    if(l != NULL){
+        CSLNode *newnode = (CSLNode *)malloc(sizeof(CSLNode));
+
+        if(newnode != NULL){
+            CSLNode *current =  l->first;
+            CSLNode *last = NULL;
+
+            if(current != NULL){
+
+                int i = 0;
+                while(current -> next != l->first && i < k){
+                    last = current;
+                    current = current -> next;
+                    i += 1;
+                }
+
+                if(i == k){
+                    newnode -> data = data;
+                    newnode -> next = current;
+                    if(last == NULL){
+                        l->first = newnode;
+                
+                    }
+                    else{
+                        last->next = newnode;
+                        
+                    }
+
+                    return TRUE;
+                }
+                
+            }
+        }
+    }
+
+    return FALSE;
+}
+
+
+//para lista circular duplamente encadeada
+
+int cdllInsertKPosition(CDLList *l, void *data, int k){
+    if(l != NULL){
+        CDLNode *newnode = (CDLNode *)malloc(sizeof(CDLNode));
+
+        if(newnode != NULL){
+            CDLNode *current = l->first;
+
+            if(current != NULL){
+                
+                int i = 0;
+
+                while(current -> next != l->first && i < k){
+                    current = current -> next;
+                    i += 1;
+                }
+
+                if(i == k){
+                    newnode -> data = data;
+                    newnode -> next = current;
+                    current -> prev -> next = newnode;
+                    newnode -> prev = current -> prev;
+                    current -> prev = newnode;
+                    if(current == l->first){
+                        l->first = newnode;
+                    }
+                    return TRUE;
+                }
+            }
+        }
+    }
+
+    return FALSE;
+}

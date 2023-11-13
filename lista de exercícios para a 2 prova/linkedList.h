@@ -27,7 +27,7 @@ typedef struct _sllist_
 
 
 typedef struct _cslnode_ {
-    struct _slnode_ *next;
+    struct _cslnode_ *next;
     void * data;
 }CSLNode;
 
@@ -41,7 +41,7 @@ typedef struct _csllist_
 
 
 typedef struct _cdlnode_ {
-    struct _slnode_ *next, *prev;
+    struct _cdlnode_ *next, *prev;
     void * data;
 }CDLNode;
 
@@ -60,6 +60,22 @@ CSLList *csllcreate();
 CDLList *cdllcreate();
 int sllInsertAsFirst(SLList *l, void *data);
 int dllInsertAsFirst(DLList *l, void *data);
+int csllInsertAsFirst(CSLList *l, void *data);
+int cdllInsertAsFirst(CDLList *l, void *data);
+int sllInsertAsLast(SLList *l, void *data);
+int dllInsertAsLast(DLList *l, void *data);
+int csllInsertAsLast(CSLList *l, void *data);
+int cdllInsertAsLast(CDLList *l, void *data);
+int sllInsertKPosition(SLList *l, void *data, int k);
+int dllInsertKPosition(DLList *l, void *data, int k);
+
+
+
+
+
+
+
+
 
 
 

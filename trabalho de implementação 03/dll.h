@@ -10,7 +10,7 @@ typedef struct _dlnode_ {
 typedef struct _dllist_
 {
     DLNode *first;
-    int cur;
+    
 }DLList;
 
 

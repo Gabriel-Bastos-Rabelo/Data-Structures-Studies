@@ -9,7 +9,7 @@ DLList* dllCreate(){
 
     if(l != NULL){
         l->first = NULL;
-        l->cur = -1;
+        
         return l;
     }
 

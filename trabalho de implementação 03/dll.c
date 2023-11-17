@@ -156,29 +156,6 @@ void* removeSpec(DLList *l, void *key, int(*cmp)(void *, void*)){
     return NULL;
 }
 
-void* dllQuery(DLList *l, void *key, int(*cmp)(void *, void*)){
-    if(l != NULL){
-        if(l->first != NULL){
-            DLNode *current;
-            current = l->first;
-            int stat = cmp(key, current->data);
-
-            while(stat != TRUE && current -> next != NULL){
-                current = current -> next;
-                stat = cmp(key, current->data);
-            }
-
-            if(stat == TRUE){
-                void *data = current->data;
-
-                return data;
-            }
-        }
-    }
-
-    return NULL;
-}
-
 
 void* removeLast(DLList *l){
     if(l != NULL){
@@ -247,4 +224,253 @@ void* dllGetNext(DLNode *node){
     return NULL;
 
 
+}
+
+
+DLList *queryByName(DLList *l, void *key, int(*cmp)(void *, void*)){
+    if(l != NULL){
+        DLList *aux = dllCreate();
+
+        if(aux != NULL){
+            DLNode *current = l->first;
+            if(current != NULL){
+                int stat = cmp(key, current->data);
+                if(stat){
+                    
+                    dllInsertAsLast(aux, current->data);
+                }
+
+
+                while(current -> next != NULL){
+                    current = current -> next;
+                    stat = cmp(key, current->data);
+                    if(stat){
+                        
+                        dllInsertAsLast(aux, current->data);
+                    }
+                    
+                }
+
+                return aux;
+            }
+
+
+        }
+    }
+
+    return NULL;
+}
+
+DLList *queryByYear(DLList *l, int key, int(*cmp)(int, void*)){
+    if(l != NULL){
+        DLList *aux = dllCreate();
+
+        if(aux != NULL){
+            DLNode *current = l->first;
+            if(current != NULL){
+                int stat = cmp(key, current->data);
+                if(stat){
+                    
+                    dllInsertAsLast(aux, current->data);
+                }
+
+
+                while(current -> next != NULL){
+                    current = current -> next;
+                    stat = cmp(key, current->data);
+                    if(stat){
+                        
+                        dllInsertAsLast(aux, current->data);
+                    }
+                    
+                }
+
+                return aux;
+            }
+
+
+        }
+    }
+
+    return NULL;
+}
+
+
+DLList *queryByImdb(DLList *l, float key, int(*cmp)(float, void*)){
+    if(l != NULL){
+        DLList *aux = dllCreate();
+
+        if(aux != NULL){
+            DLNode *current = l->first;
+            if(current != NULL){
+                int stat = cmp(key, current->data);
+                if(stat){
+                    
+                    dllInsertAsLast(aux, current->data);
+                }
+
+
+                while(current -> next != NULL){
+                    current = current -> next;
+                    stat = cmp(key, current->data);
+                    if(stat){
+                        
+                        dllInsertAsLast(aux, current->data);
+                    }
+                    
+                }
+
+                return aux;
+            }
+
+
+        }
+    }
+
+    return NULL;
+}
+
+
+DLList *removeByName(DLList *l, void *key, int(*cmp)(void *, void *)){
+    if(l != NULL){
+        DLList *aux = dllCreate();
+
+        if(aux != NULL){
+            DLNode *current = l->first;
+            if(current != NULL){
+                int stat = cmp(key, current->data);
+                if(stat){
+                    
+                    dllInsertAsLast(aux, current->data);
+                    
+                }
+
+
+                while(current -> next != NULL){
+                    current = current -> next;
+                    stat = cmp(key, current->data);
+                    if(stat){
+                        
+                        dllInsertAsLast(aux, current->data);
+                        
+                    }
+                    
+                }
+                current = aux -> first;
+
+                while(current != NULL){
+                    removeNode(l, current);
+                    current = current -> next;
+                }
+                return aux;
+            }
+
+
+        }
+    }
+
+    return NULL;
+}
+
+DLList *removeByYear(DLList *l, int key, int(*cmp)(int, void *)){
+    if(l != NULL){
+        DLList *aux = dllCreate();
+
+        if(aux != NULL){
+            DLNode *current = l->first;
+            if(current != NULL){
+                int stat = cmp(key, current->data);
+                if(stat){
+                    
+                    dllInsertAsLast(aux, current->data);
+                    
+                }
+
+
+                while(current -> next != NULL){
+                    current = current -> next;
+                    stat = cmp(key, current->data);
+                    if(stat){
+                        
+                        dllInsertAsLast(aux, current->data);
+                        
+                    }
+                    
+                }
+                current = aux -> first;
+
+                while(current != NULL){
+                    removeNode(l, current);
+                    current = current -> next;
+                }
+                return aux;
+            }
+
+
+        }
+    }
+
+    return NULL;
+}
+
+
+DLList *removeByImdb(DLList *l, float key, int(*cmp)(float, void *)){
+
+
+    if(l != NULL){
+        DLList *aux = dllCreate();
+
+        if(aux != NULL){
+            DLNode *current = l->first;
+            if(current != NULL){
+                int stat = cmp(key, current->data);
+                if(stat){
+                    
+                    dllInsertAsLast(aux, current->data);
+                    
+                }
+
+
+                while(current -> next != NULL){
+                    current = current -> next;
+                    stat = cmp(key, current->data);
+                    if(stat){
+                        
+                        dllInsertAsLast(aux, current->data);
+                        
+                    }
+                    
+                }
+
+                
+                return aux;
+            }
+
+
+        }
+    }
+
+    return NULL;
+
+}
+
+
+int removeNode(DLList *l, DLNode *n){
+    if(l != NULL){
+        if(l -> first != NULL){
+            if(l -> first == n){
+                l->first = n -> next;
+            }
+            else{
+                n->prev->next = n->next;
+                if(n -> next != NULL){
+                    n->next->prev = n->prev;
+                }
+            }
+            free(n);
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }

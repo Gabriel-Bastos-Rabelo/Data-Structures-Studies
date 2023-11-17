@@ -20,6 +20,8 @@ Roteiro para teste:
 */
 
 int compareByName(void *key, void *data);
+int compareByYear(int key, void *data);
+int compareByImdb(float key, void *data);
 
 typedef struct
 {
@@ -31,7 +33,7 @@ typedef struct
 int main()
 {
 
-    int n = 0;
+    int n;
     DLList *dllCollection = NULL;
 
     while (TRUE)
@@ -111,80 +113,278 @@ int main()
 
         case 3:
         {
+            if(dllCollection != NULL){
 
-            if (dllCollection != NULL)
-            {
-                printf("Digite o nome do filme a ser removido: \n");
 
-                char key[30];
+                while(TRUE){
+                    int j;
+                    printf("Digite 1 para remover pelo nome\n");
+                    printf("Digite 2 para remover pelo ano de lançamento\n");
+                    printf("Digite 3 para remover pela nota imdb\n");
+                    printf("Digite 4 para voltar\n");
 
-                while ((getchar()) != '\n')
-                    ;
-                fgets(key, sizeof(key), stdin);
+                    scanf("%d", &n);
 
-                size_t len = strlen(key);
-                if (len > 0 && key[len - 1] == '\n')
-                {
-                    key[len - 1] = '\0';
+                    if (n == 4)
+                    {
+                        break;
+                    }
+                    
+                    switch (n)
+                    {
+                        case 1:
+                            printf("Digite o nome do filme a ser removido: \n");
+                            char key[30];
+
+                            while ((getchar()) != '\n');
+                            fgets(key, sizeof(key), stdin);
+
+                            size_t len = strlen(key);
+                            if (len > 0 && key[len - 1] == '\n')
+                            {
+                                key[len - 1] = '\0';
+                            }
+
+                            DLList *FilmeBuscado = (DLList *)queryByName(dllCollection, key, compareByName);
+
+                            if (FilmeBuscado != NULL)
+                            {   
+                                if(FilmeBuscado->first != NULL){
+                                    DLNode *current = dllGetFirst(FilmeBuscado);
+                                    Filme *filme;
+                                    while (current != NULL)
+                                    {
+                                        filme = current->data;
+                                        removeSpec(dllCollection, filme->nome, compareByName);
+                                        current = dllGetNext(current);
+                                    }
+                                    printf("Todos os filmes com o nome fornecido foram removidos\n");
+                                }
+                                else{
+                                    printf("Nenhum filme foi encontrado\n");
+                                }
+                                
+                            }
+                            else
+                            {
+                                printf("Falha ao remover o filme\n");
+                            }
+                            break;
+                        
+                        case 2:
+                            printf("Digite o ano de lançamento do filme:\n");
+                            int ano;
+                            scanf("%f", &ano);
+                            DLList *FilmeBuscadoAno = (DLList *)queryByYear(dllCollection, ano, compareByYear);
+
+                            if (FilmeBuscadoAno != NULL)
+                            {   
+                                if(FilmeBuscadoAno->first != NULL){
+
+                                    DLNode *current = dllGetFirst(FilmeBuscadoAno);
+                                    Filme *filme;
+                                    while (current != NULL)
+                                    {
+                                        filme = current->data;
+                                        removeSpec(dllCollection, filme->nome, compareByName);
+                                        current = dllGetNext(current);
+                                    }
+                                    printf("Todos os filmes com o ano fornecido foram removidos\n");
+
+                                }
+                                else{
+                                    printf("Nenhum filme foi encontrado\n");
+                                }
+                                
+                            }
+                            else
+                            {
+                                printf("Falha ao remover o filme\n");
+                            }
+                            break;
+                        case 3:
+                            printf("Digite a nota IMDB do filme:\n");
+                            float imdb;
+                            scanf("%f", &imdb);
+                            DLList *FilmeBuscadoImdb = (DLList *)queryByImdb(dllCollection, imdb, compareByImdb);
+
+                            if (FilmeBuscadoImdb != NULL)
+                            {   
+                                if(FilmeBuscado->first != NULL){
+
+                                    DLNode *current = dllGetFirst(FilmeBuscadoImdb);
+                                    Filme *filme;
+                                    while (current != NULL)
+                                    {
+                                        filme = current->data;
+                                        removeSpec(dllCollection, filme->nome, compareByName);
+                                        current = dllGetNext(current);
+                                    }
+                                    printf("Todos os filmes com a nota IMDB fornecida foram removidos\n");
+
+                                }
+                                else{
+                                    printf("Nenhum filme foi encontrado\n");
+                                }
+                                
+                            }
+                            else
+                            {
+                                printf("Falha ao remover o filme\n");
+                            }
+                            break;
+                        default:
+                            printf( "Digite uma opção válida");
+                            break;
+                    }
+
+                        
                 }
 
-                Filme *FilmeRemovido = (Filme *)removeSpec(dllCollection, &key, compareByName);
 
-                if (FilmeRemovido != NULL)
-                {
-                    printf("Filme removido com sucesso\n");
-                }
-                else
-                {
-                    printf("Filme não foi encontrado\n");
-                }
+
             }
             else
             {
                 printf("Crie uma coleção antes!\n");
             }
-
             break;
+
         }
 
         case 4:
-        {
-            if (dllCollection != NULL)
-            {
-                printf("Digite o nome do filme a ser buscado: \n");
-                char key[30];
+        {   
 
-                while ((getchar()) != '\n')
-                    ;
-                fgets(key, sizeof(key), stdin);
+            if(dllCollection != NULL){
 
-                size_t len = strlen(key);
-                if (len > 0 && key[len - 1] == '\n')
-                {
-                    key[len - 1] = '\0';
+
+                while(TRUE){
+                    int j;
+                    printf("Digite 1 para pesquisar pelo nome\n");
+                    printf("Digite 2 para pesquisar pelo ano de lançamento\n");
+                    printf("Digite 3 para pesquisar pela nota imdb\n");
+                    printf("Digite 4 para voltar\n");
+
+                    scanf("%d", &n);
+
+                    if (n == 4)
+                    {
+                        break;
+                    }
+                    
+                    switch (n)
+                    {
+                        case 1:
+                            printf("Digite o nome do filme a ser buscado: \n");
+                            char key[30];
+
+                            while ((getchar()) != '\n');
+                            fgets(key, sizeof(key), stdin);
+
+                            size_t len = strlen(key);
+                            if (len > 0 && key[len - 1] == '\n')
+                            {
+                                key[len - 1] = '\0';
+                            }
+
+                            DLList *FilmeBuscado = (DLList *)queryByName(dllCollection, key, compareByName);
+
+                            if (FilmeBuscado != NULL)
+                            {
+                                DLNode *current = dllGetFirst(FilmeBuscado);
+                                Filme *filme;
+                                while (current != NULL)
+                                {
+                                    filme = current->data;
+                                    printf("Nome: %s\n", filme->nome);
+                                    printf("Ano de lançamento: %d\n", filme->anoLancamento);
+                                    printf("Nota imdb: %f\n", filme->imdb);
+                                    printf("------------------------------------\n\n");
+                                    current = dllGetNext(current);
+                                }
+                            }
+                            else
+                            {
+                                printf("Filme não encontrado\n");
+                            }
+                            break;
+                        
+                        case 2:
+                            printf("Digite o ano de lançamento do filme:\n");
+                            int ano;
+                            scanf("%d", &ano);
+                            DLList *FilmeBuscadoYear = (DLList *)queryByYear(dllCollection, ano, compareByYear);
+
+                            if (FilmeBuscadoYear != NULL)
+                            {
+                                DLNode *current = dllGetFirst(FilmeBuscadoYear);
+                                Filme *filme;
+                                while (current != NULL)
+                                {
+                                    filme = current->data;
+                                    printf("Nome: %s\n", filme->nome);
+                                    printf("Ano de lançamento: %d\n", filme->anoLancamento);
+                                    printf("Nota imdb: %f\n", filme->imdb);
+                                    printf("------------------------------------\n\n");
+                                    current = dllGetNext(current);
+                                }
+                            }
+                            else
+                            {
+                                printf("Filme não encontrado\n");
+                            }
+                            break;
+
+                        case 3:
+                            printf("Digite a nota IMDB do filme:\n");
+                            float imdb;
+                            scanf("%f", &imdb);
+                            DLList *FilmeBuscadoImdb = (DLList *)queryByImdb(dllCollection, imdb, compareByImdb);
+
+                            if (FilmeBuscadoImdb != NULL)
+                            {
+                                DLNode *current = dllGetFirst(FilmeBuscadoImdb);
+                                Filme *filme;
+                                while (current != NULL)
+                                {
+                                    filme = current->data;
+                                    printf("Nome: %s\n", filme->nome);
+                                    printf("Ano de lançamento: %d\n", filme->anoLancamento);
+                                    printf("Nota imdb: %f\n", filme->imdb);
+                                    printf("------------------------------------\n\n");
+                                    current = dllGetNext(current);
+                                }
+                            }
+                            else
+                            {
+                                printf("Filme não encontrado\n");
+                            }
+                            break;
+                        default:
+                            printf( "Digite uma opção válida");
+                            break;
+                    }
+
+                        
                 }
 
-                Filme *FilmeBuscado = (Filme *)dllQuery(dllCollection, key, compareByName);
 
-                if (FilmeBuscado != NULL)
-                {
-                    printf("Filme Encontrado\n");
-                    printf("Nome: %s\n", FilmeBuscado->nome);
-                    printf("Ano de lançamento: %d\n", FilmeBuscado->anoLancamento);
-                    printf("Nota imdb: %f\n", FilmeBuscado->imdb);
-                }
-                else
-                {
-                    printf("Filme não encontrado\n");
-                }
+
             }
             else
             {
                 printf("Crie uma coleção antes!\n");
             }
-
             break;
+
+
+
         }
+            
+               
+        
+        
+        
 
         case 5:
         {
@@ -274,5 +474,25 @@ int compareByName(void *key, void *data)
     {
         return TRUE;
     }
+    return FALSE;
+}
+
+int compareByYear(int key, void *data){
+    Filme *dataItem = (Filme *)data;
+
+    if(key == dataItem->anoLancamento){
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+int compareByImdb(float key, void *data){
+    Filme *dataItem = (Filme *)data;
+
+    if(key == dataItem->imdb){
+        return TRUE;
+    }
+
     return FALSE;
 }

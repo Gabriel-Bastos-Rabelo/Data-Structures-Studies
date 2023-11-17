@@ -14,6 +14,7 @@ typedef struct _dllist_
 }DLList;
 
 
+
 DLList *dllCreate();
 
 int dllDestroy(DLList *l);
@@ -23,11 +24,17 @@ int dllDestroy(DLList *l);
 int dllinsertAfterSpec(DLList *l, void *key, void *data, int (*cmp)(void *, void*));
 int dllInsertAsLast(DLList *l, void *data);
 void* removeSpec(DLList *l, void *key, int(*cmp)(void *, void*));
-void* dllQuery(DLList *l, void *key, int(*cmp)(void *, void*));
+DLList *removeByName(DLList *l, void *key, int(*cmp)(void *, void *));
+DLList *removeByYear(DLList *l, int key, int(*cmp)(int, void *));
+DLList *removeByImdb(DLList *l, float key, int(*cmp)(float, void *));
+int removeNode(DLList *l, DLNode *n);
 void* removeLast(DLList *l);
 int esvaziarLista(DLList *l);
 void* dllGetFirst(DLList *l);
 void* dllGetNext(DLNode *node);
+DLList *queryByName(DLList *l, void *key, int(*cmp)(void *, void*));
+DLList *queryByYear(DLList *l, int key, int(*cmp)(int, void*));
+DLList *queryByImdb(DLList *l, float key, int(*cmp)(float, void*));
 
 
 

@@ -6,8 +6,6 @@
 int main(){
 
 
-    printf("jlkjlkjkl");
-
     SLList *sllist = sllcreate();
 
     int numero = 10;

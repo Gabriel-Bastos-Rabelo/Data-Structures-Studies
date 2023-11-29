@@ -708,3 +708,367 @@ int cdllInsertBeforeKey(CDLList*l, void *key, void *data, int(*cmp)(void*, void*
 
     return FALSE;
 }
+
+int sllInsertOrdenedList(SLList *l, void *key, int(*cmp)(void*, void*)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            SLNode *cur = l -> first;
+            SLNode *prev = NULL;
+            //A função passada verifica se key é menor que cur->data
+            int stat = cmp(cur->data, key);
+            //retorna true se key for menor que cur -> data
+            while(stat != TRUE && cur -> next != NULL){
+                prev = cur;
+                cur = cur->next;
+                stat = cmp(cur->data, key);
+            }
+
+            if(stat){
+                SLNode *newnode = (SLNode *)malloc(sizeof(SLNode));
+                if(newnode != NULL){
+                    newnode -> data = key;
+                    newnode -> next = cur;
+                    if(prev != NULL){
+                        prev->next = newnode;
+                    }
+                    else{
+                        l->first = newnode;
+                    }
+
+                    return TRUE;
+
+                }
+            }
+            else{
+                SLNode *newnode = (SLNode *)malloc(sizeof(SLNode));
+                if(newnode != NULL){
+                    newnode -> data = key;
+                    newnode -> next = NULL;
+                    cur->next = newnode;
+                    return TRUE;
+                }
+            }
+
+
+
+        }
+    }
+    return FALSE;
+}
+
+int dllInsertOrdenedList(DLList *l, void *key, int(*cmp)(void*, void*)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            DLNode *cur = l->first;
+
+            int stat = cmp(cur -> data, key);
+            while(stat != TRUE && cur->next != NULL){
+                cur = cur -> next;
+                stat = cmp(cur -> data, key);
+            }
+
+            if(stat){
+                DLNode *newnode = (DLNode *)malloc(sizeof(DLNode));
+                if(newnode != NULL){
+                    newnode -> data = key;
+                    newnode -> next = cur;
+                    newnode -> prev = cur->prev;
+                    if(cur->prev != NULL){
+                        cur->prev->next = newnode;
+                    }
+                    else{
+                        l->first = newnode;
+                    }
+
+                    cur -> prev = newnode;
+                    return TRUE;
+                }
+            }
+
+            else{
+                DLNode *newnode = (DLNode *)malloc(sizeof(DLNode));
+                if(newnode != NULL){
+                    newnode -> data = key;
+                    newnode -> next = NULL;
+                    newnode -> prev = cur;
+                    cur->next = newnode;
+                    return TRUE;
+                }
+            }
+        }
+    }
+
+    return FALSE;
+}
+
+int csllInsertOrdenedList(CSLList *l, void *key, int(*cmp)(void*, void*)){
+    if(l != NULL){
+        if(l->first != NULL){
+            CSLNode *cur = l->first;
+            CSLNode *prev = NULL;
+            int stat = smp(cur->data, key);
+            while(stat != TRUE && cur -> next != l->first){
+                prev = cur;
+                cur = cur -> next;
+                stat = cmp(cur->data, key);
+            }
+
+            if(stat){
+                CSLNode *newnode = (CSLNode *)malloc(sizeof(CSLNode));
+                if(newnode != NULL){
+                    newnode -> data = key;
+                    newnode -> next = cur;
+                    if(prev != NULL){
+                        prev -> next = newnode;
+                    }
+                    else{
+                        l->first = newnode;
+                    }
+                    return TRUE;
+                }
+            }
+            else{
+                CSLNode *newnode = (CSLNode *)malloc(sizeof(CSLNode));
+                if(newnode != NULL){
+                    newnode -> data = key;
+                    newnode -> next = l->first;
+                    cur->next = newnode;
+                    return TRUE;
+                }
+            }
+        }
+    }
+
+    return FALSE;
+}
+
+int cdllInsertOrdenedList(CDLList *l, void *key, int(*cmp)(void*, void*)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            CDLNode *cur = l -> first;
+            int stat = cmp(cur->data, key);
+            while(stat != TRUE && cur -> next != l->first){
+                cur = cur -> next;
+                stat = cmp(cur -> data, key);
+            }
+
+            if(stat){
+                CDLNode *newnode = (CDLNode *)malloc(sizeof(CDLNode));
+                if(newnode != NULL){
+                    newnode -> data = key;
+                    newnode -> next = cur;
+                    newnode -> prev = cur->prev;
+                    if(cur->prev != NULL){
+                        cur->prev->next = newnode;
+                    }
+                    else{
+                        l->first = newnode;
+                    }
+
+                    cur->prev = newnode;
+
+                    return TRUE;
+                }
+            }
+
+            else{
+                CDLNode *newnode = (CDLNode *)malloc(sizeof(CDLNode));
+                if(newnode != NULL){
+                    newnode -> data = key;
+                    newnode -> next = l->first;
+                    newnode -> prev = cur;
+                    cur->next->prev = newnode;
+                    cur->next = newnode;
+
+                    return FALSE;
+                }
+            }
+        }
+    }
+
+    return FALSE;
+}
+
+
+void *sllRemoveFirst(SLList *l){
+    if(l != NULL){
+        if(l->first != NULL){
+            SLNode *first = l->first;
+            void *data = first -> data;
+            l->first = first->next;
+            free(first);
+            return data;
+        }
+    }
+
+    return NULL;
+}
+
+void *dllRemoveFirst(DLList *l){
+    if(l != NULL){
+        if(l -> first != NULL){
+            DLNode *first = l->first;
+            void *data = first->data;
+            l->first = first->next;
+            if(first -> next != NULL){
+                first -> next -> prev = NULL;
+            }
+            free(first);
+            return data;
+        }
+    }
+
+    return NULL;
+}
+
+
+void *csllRemoveFirst(CSLList *l){
+    if(l != NULL){
+        if(l->first != NULL){
+            CSLNode *first = l->first;
+            void *data = first->data;
+            if(first->next != first){
+                l->first = first->next;
+            }
+            else{
+                l->first = NULL;
+            }
+
+            free(first);
+            return data;
+        }
+    }
+
+    return NULL;
+}
+
+void *cdllRemoveFirst(CDLList *l){
+    if(l != NULL){
+        if(l -> first != NULL){
+            CDLNode *first = l->first;
+            void *data = first->data;
+            if(first -> next != first){
+                l->first = first -> next;
+                first -> next -> prev = first -> prev;
+                first -> prev -> next = first -> next;
+            }
+            else{
+                l->first = NULL;
+            }
+
+            free(first);
+            return data;
+        }
+    }
+
+    return NULL;
+}
+
+void *sllRemoveLast(SLList *l){
+    if(l != NULL){
+        if(l -> first != NULL){
+            SLNode *cur = l->first;
+            SLNode *prev = NULL;
+            while(cur -> next != NULL){
+                prev = cur;
+                cur = cur->next;
+            }
+            void *data = cur->data;
+            if(prev != NULL){
+                prev -> next = NULL;
+            }
+            else{
+                l->first = NULL;
+            }
+
+            free(cur);
+            return data;
+
+
+        }
+    }
+
+    return NULL;
+}
+
+void *dllRemoveLast(DLList *l){
+    if(l != NULL){
+        if(l->first != NULL){
+            DLNode *cur = l->first;
+            while(cur -> next != NULL){
+                cur = cur -> next;
+            }
+            void *data = cur->data;
+
+            if(cur -> prev != NULL){
+                cur -> prev -> next = NULL;
+            }
+            else{
+                l->first = NULL;
+            }
+            free(cur);
+            return data;
+        }
+    }
+
+    return NULL;
+}
+
+void *cdllRemoveLast(CDLList *l){
+    if(l != NULL){
+        if(l -> first != NULL){
+            CSLNode *cur = l->first;
+            CSLNode *prev = NULL;
+            while(cur -> next != l->first){
+                prev = cur;
+                cur = cur -> next;
+            }
+
+            void *data = cur->data;
+            if(prev != NULL){
+                prev -> next = cur->next;
+            }
+            else{
+                l->first = NULL;
+            }
+
+            free(cur);
+            return data;
+
+        }
+    }
+
+    return NULL;
+}
+
+
+void *cdllRemoveLast(CDLList *l){
+    if(l != NULL){
+        if(l -> first != NULL){
+            CDLNode *cur = l->first;
+            while(cur -> next != l->first){
+                cur = cur->next;
+            }
+
+            void *data = cur -> data;
+            if(cur != l->first){
+                cur->prev->next = cur->next;
+                cur->next->prev = cur->prev;
+            }
+            else{
+                l->first = NULL;
+            }
+
+            free(cur);
+            return data;
+
+
+        }
+    }
+
+    return NULL;
+}
+
+
+
+

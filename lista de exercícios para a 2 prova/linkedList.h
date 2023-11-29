@@ -69,6 +69,16 @@ int cdllInsertAsLast(CDLList *l, void *data);
 int sllInsertKPosition(SLList *l, void *data, int k);
 int dllInsertKPosition(DLList *l, void *data, int k);
 
+int sllInsertAfterKey(SLList *l, void *key, void *data, int(*cmp)(void*, void*));
+int dllInsertAfterKey(DLList *l, void *key, void *data, int(*cmp)(void*, void*));
+int csllInsertAfterKey(CSLList *l, void *key, void *data, int(*cmp)(void*, void*));
+int cdllInsertAfterKey(CDLList*l, void *key, void *data, int(*cmp)(void*, void*));
+
+int sllInsertBeforeKey(SLList *l, void *key, void *data, int(*cmp)(void*, void*));
+int dllInsertBeforeKey(DLList *l, void *key, void *data, int(*cmp)(void*, void*));
+int csllInsertBeforeKey(CSLList *l, void *key, void *data, int(*cmp)(void*, void*));
+int cdllInsertBeforeKey(CDLList*l, void *key, void *data, int(*cmp)(void*, void*));
+
 
 
 

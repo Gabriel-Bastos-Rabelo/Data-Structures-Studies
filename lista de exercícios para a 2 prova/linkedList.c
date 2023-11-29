@@ -464,3 +464,247 @@ int cdllInsertKPosition(CDLList *l, void *data, int k){
 
     return FALSE;
 }
+
+
+
+int sllInsertAfterKey(SLList *l, void *key, void *data, int(*cmp)(void*, void*)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            SLNode *cur = l -> first;
+            int stat = cmp(cur, key);
+            while(stat != TRUE && cur -> next != NULL){
+                cur = cur->next;
+                stat = cmp(cur, key);
+            }
+
+            if(stat){
+                SLNode *newnode = (SLNode *)malloc(sizeof(SLNode));
+                if(newnode != NULL){
+                    newnode -> data = data;
+                    newnode -> next = cur -> next;
+                    cur -> next = newnode;
+                    return TRUE;
+                }
+                
+            }
+        }
+    }
+
+    return FALSE;
+}
+
+
+int dllInsertAfterKey(DLList *l, void *key, void *data, int(*cmp)(void*, void*)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            DLNode *cur = l->first;
+            int stat = cmp(cur, key);
+            while(stat != TRUE && cur-> next != NULL){
+                cur = cur->next;
+                stat = cmp(cur, key);
+            }
+
+            if(stat){
+                DLNode *newnode = (DLNode *)malloc(sizeof(DLNode));
+                if(newnode != NULL){
+                    newnode -> data = data;
+                    newnode -> prev = cur;
+                    newnode -> next = cur -> next;
+                    if(cur -> next != NULL){
+                        cur -> next -> prev = newnode;
+                    }
+        
+                    cur -> next = newnode;
+                    return TRUE;
+                }
+            }
+        }
+    }
+
+    return FALSE;
+}
+
+int csllInsertAfterKey(CSLList *l, void *key, void *data, int(*cmp)(void*, void*)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            CSLNode *cur = l -> first;
+
+            int stat = cmp(cur, key);
+            while(stat != TRUE && cur -> next != l->first){
+                cur = cur -> next;
+                stat = cmp(cur, key);
+            }
+
+            if(stat){
+                CSLNode *newnode = (CSLNode *)malloc(sizeof(CSLNode));
+                if (newnode != NULL){
+                    newnode -> data = data;
+                    newnode -> next = cur->next;
+                    cur -> next = newnode;
+
+                    return TRUE;
+                }
+            }
+        }
+    }
+    return FALSE;
+}
+
+int cdllInsertAfterKey(CDLList*l, void *key, void *data, int(*cmp)(void*, void*)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            CDLNode *cur = l -> first;
+            int stat = cmp(cur->data, key);
+
+            while(stat != TRUE && cur -> next != l->first){
+                cur = cur -> next;
+                stat = cmp(cur->data, key);
+            }
+
+            if(stat){
+                CDLNode *newnode = (CDLNode *)malloc(sizeof(CDLNode));
+                if(newnode != NULL){
+                    newnode -> data = data;
+                    newnode -> next = cur->next;
+                    newnode -> prev = cur;
+                    cur->next = newnode;
+                    cur->next->prev = newnode;
+
+                    return TRUE;
+                }
+            }
+        }
+    }
+    return FALSE;    
+}
+
+
+
+int sllInsertBeforeKey(SLList *l, void *key, void *data, int(*cmp)(void*, void*)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            SLNode *cur = l->first;
+            SLNode *prev = NULL;
+            int stat = cmp(cur->data, key);
+            while(stat != TRUE && cur -> next != NULL){
+                prev = cur;
+                cur = cur -> next;
+                stat = cmp(cur->data, key);
+            }
+
+            if(stat){
+                SLNode *newnode = (SLNode *)malloc(sizeof(DLNode));
+                if(newnode != NULL){
+                    newnode -> data = data;
+                    newnode -> next = cur;
+                    if(prev != NULL){
+                        prev -> next = newnode;
+                    }
+                    else{
+                        l->first = newnode;
+                    }
+
+                    return TRUE;
+                }
+            }
+            
+        }
+    }
+
+    return FALSE;
+}
+
+
+int dllInsertBeforeKey(DLList *l, void *key, void *data, int(*cmp)(void*, void*)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            DLNode *cur = l->first;
+            int stat = cmp(cur->data, key);
+            while(stat != TRUE && cur -> next != NULL){
+                cur = cur -> next;
+                stat = cmp(cur -> data, key);
+            }
+
+            if(stat){
+                DLNode *newnode = (DLNode *)malloc(sizeof(DLNode));
+                if(newnode != NULL){
+                    newnode -> data = data;
+                    newnode -> next = cur;
+                    newnode -> prev = cur -> prev;
+                    if(cur -> prev != NULL){
+                        cur -> prev -> next = newnode;
+                    }
+                    else{
+                        l->first = newnode;
+                    }
+
+                    cur -> prev = newnode;
+                    return TRUE;
+
+                }
+            }
+        }
+    }
+    return FALSE;
+}
+
+int csllInsertBeforeKey(CSLList *l, void *key, void *data, int(*cmp)(void*, void*)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            CSLNode *cur = l -> first;
+            CSLNode *prev = NULL;
+            int stat = cmp(cur->data, key);
+            while(stat != TRUE && cur -> next != l -> first){
+                prev = cur;
+                cur = cur -> next;
+                stat = cmp(cur -> data, key);
+            }
+
+            if(stat){
+                CSLNode *newnode = (CSLNode *)malloc(sizeof(CSLNode));
+                if(newnode != NULL){
+                    newnode -> data = data;
+                    newnode -> next = cur;
+                    if(prev != NULL){
+                        prev -> next = newnode;
+                    }
+                    else{
+                        l -> first = newnode;
+                    }
+
+                    return TRUE;
+                }
+            }
+        }
+    }
+
+    return FALSE;
+}
+
+int cdllInsertBeforeKey(CDLList*l, void *key, void *data, int(*cmp)(void*, void*)){
+    if(l != NULL){
+        if(l -> first != NULL){
+            CDLNode *cur = l -> first;
+            int stat = cmp(cur->data, key);
+            while(stat != TRUE && cur -> next != l -> first){
+                cur = cur -> next;
+                stat = cmp(cur-> data, key);
+            }
+
+            if(stat){
+                CDLNode *newnode = (CDLNode *)malloc(sizeof(CDLNode));
+                if(newnode != NULL){
+                    newnode -> data = data;
+                    newnode -> next = cur;
+                    newnode -> prev = cur->prev;
+                    cur->prev->next = newnode;
+                    cur -> prev = newnode;
+
+                    return TRUE;
+                }
+            }
+        }
+    }
+
+    return FALSE;
+}

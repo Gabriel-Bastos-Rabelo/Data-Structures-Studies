@@ -261,7 +261,7 @@ DLList *queryByName(DLList *l, void *key, int(*cmp)(void *, void*)){
     return NULL;
 }
 
-DLList *queryByYear(DLList *l, int key, int(*cmp)(int, void*)){
+DLList *queryByYear(DLList *l, void *key, int(*cmp)(void*, void*)){
     if(l != NULL){
         DLList *aux = dllCreate();
 
@@ -296,7 +296,7 @@ DLList *queryByYear(DLList *l, int key, int(*cmp)(int, void*)){
 }
 
 
-DLList *queryByImdb(DLList *l, float key, int(*cmp)(float, void*)){
+DLList *queryByImdb(DLList *l, void* key, int(*cmp)(void*, void*)){
     if(l != NULL){
         DLList *aux = dllCreate();
 

@@ -20,8 +20,8 @@ Roteiro para teste:
 */
 
 int compareByName(void *key, void *data);
-int compareByYear(int key, void *data);
-int compareByImdb(float key, void *data);
+int compareByYear(void *key, void *data);
+int compareByImdb(void *key, void *data);
 
 typedef struct
 {
@@ -174,20 +174,20 @@ int main()
                         case 2:
                             printf("Digite o ano de lançamento do filme:\n");
                             int ano;
-                            scanf("%f", &ano);
-                            DLList *FilmeBuscadoAno = (DLList *)queryByYear(dllCollection, ano, compareByYear);
+                            scanf("%d", &ano);
+                            DLList *FilmeBuscadoAno = (DLList *)queryByYear(dllCollection, (void*)&ano, compareByYear);
 
                             if (FilmeBuscadoAno != NULL)
                             {   
                                 if(FilmeBuscadoAno->first != NULL){
 
-                                    DLNode *current = dllGetFirst(FilmeBuscadoAno);
+                                    DLNode *current = FilmeBuscadoAno -> first;
                                     Filme *filme;
                                     while (current != NULL)
                                     {
                                         filme = current->data;
-                                        removeSpec(dllCollection, filme->nome, compareByName);
-                                        current = dllGetNext(current);
+                                        removeSpec(dllCollection, &filme->anoLancamento, compareByYear);
+                                        current = current->next;
                                     }
                                     printf("Todos os filmes com o ano fornecido foram removidos\n");
 
@@ -206,7 +206,7 @@ int main()
                             printf("Digite a nota IMDB do filme:\n");
                             float imdb;
                             scanf("%f", &imdb);
-                            DLList *FilmeBuscadoImdb = (DLList *)queryByImdb(dllCollection, imdb, compareByImdb);
+                            DLList *FilmeBuscadoImdb = (DLList *)queryByImdb(dllCollection, &imdb, compareByImdb);
 
                             if (FilmeBuscadoImdb != NULL)
                             {   
@@ -217,7 +217,7 @@ int main()
                                     while (current != NULL)
                                     {
                                         filme = current->data;
-                                        removeSpec(dllCollection, filme->nome, compareByName);
+                                        removeSpec(dllCollection, &filme->imdb, compareByImdb);
                                         current = dllGetNext(current);
                                     }
                                     printf("Todos os filmes com a nota IMDB fornecida foram removidos\n");
@@ -313,7 +313,7 @@ int main()
                             printf("Digite o ano de lançamento do filme:\n");
                             int ano;
                             scanf("%d", &ano);
-                            DLList *FilmeBuscadoYear = (DLList *)queryByYear(dllCollection, ano, compareByYear);
+                            DLList *FilmeBuscadoYear = (DLList *)queryByYear(dllCollection, &ano, compareByYear);
 
                             if (FilmeBuscadoYear != NULL)
                             {
@@ -339,7 +339,7 @@ int main()
                             printf("Digite a nota IMDB do filme:\n");
                             float imdb;
                             scanf("%f", &imdb);
-                            DLList *FilmeBuscadoImdb = (DLList *)queryByImdb(dllCollection, imdb, compareByImdb);
+                            DLList *FilmeBuscadoImdb = (DLList *)queryByImdb(dllCollection, &imdb, compareByImdb);
 
                             if (FilmeBuscadoImdb != NULL)
                             {
@@ -477,20 +477,22 @@ int compareByName(void *key, void *data)
     return FALSE;
 }
 
-int compareByYear(int key, void *data){
+int compareByYear(void* key, void *data){
     Filme *dataItem = (Filme *)data;
-
-    if(key == dataItem->anoLancamento){
+    int keyYear = *(int *)key;
+    
+    if(keyYear == dataItem->anoLancamento){
         return TRUE;
     }
 
     return FALSE;
 }
 
-int compareByImdb(float key, void *data){
+int compareByImdb(void* key, void *data){
     Filme *dataItem = (Filme *)data;
+    float keyYear = *(float *)key;
 
-    if(key == dataItem->imdb){
+    if(keyYear == dataItem->imdb){
         return TRUE;
     }
 

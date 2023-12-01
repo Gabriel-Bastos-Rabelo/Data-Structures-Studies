@@ -33,8 +33,8 @@ int esvaziarLista(DLList *l);
 void* dllGetFirst(DLList *l);
 void* dllGetNext(DLNode *node);
 DLList *queryByName(DLList *l, void *key, int(*cmp)(void *, void*));
-DLList *queryByYear(DLList *l, int key, int(*cmp)(int, void*));
-DLList *queryByImdb(DLList *l, float key, int(*cmp)(float, void*));
+DLList *queryByYear(DLList *l, void *key, int(*cmp)(void*, void*));
+DLList *queryByImdb(DLList *l, void *key, int(*cmp)(void*, void*));
 
 
 
